@@ -30,7 +30,7 @@ import { Button } from '@/components/ui/button'
       </header>
 
       <div class="justify-center items-center">
-        <Button variant="">Click me</Button>
+        <Button>Click me</Button>
       </div>
     </SidebarInset>
   </SidebarProvider>
