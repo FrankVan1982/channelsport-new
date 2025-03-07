@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import autoprefixer from 'autoprefixer'
 import tailwind from 'tailwindcss'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+import svgLoader from 'vite-svg-loader'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
       plugins: [tailwind(), autoprefixer()],
     },
   },
-  plugins: [vue(), vueDevTools(), ViteImageOptimizer()],
+  plugins: [vue(), vueDevTools(), ViteImageOptimizer(), svgLoader()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

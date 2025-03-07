@@ -6,6 +6,17 @@ body {
   font-family: 'Manrope Variable', sans-serif;
 }
 
+.svg {
+  filter: grayscale(1);
+}
+
+.svg-button:hover .svg,
+.svg-button:focus .svg,
+.svg-button:active .svg {
+  filter: none;
+  transition: 0.3s ease;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

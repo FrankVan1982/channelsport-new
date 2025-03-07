@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Sidebar from '@/components/Sidebar.vue'
-import { SidebarProvider, SidebarTrigger, SidebarInset } from '@/components/ui/sidebar'
+import Sidebar from "@/components/Sidebar.vue";
+import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,9 +8,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 </script>
 
 <template>
@@ -28,9 +28,13 @@ import { Button } from '@/components/ui/button'
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-
-      <div class="justify-center items-center">
-        <Button>Click me</Button>
+      <br />
+      <div class="flex justify-center items-center">
+        <Button as-child variant="outline" class="svg-button">
+          <a href="https://sky.com" class="h-[5.2rem]">
+            <img src="/images/sky/sky-color.svg" alt="Sky.com" class="svg h-[4rem]" />
+          </a>
+        </Button>
       </div>
     </SidebarInset>
   </SidebarProvider>
