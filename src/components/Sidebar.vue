@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
 import {
   Sidebar,
@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
-} from '@/components/ui/sidebar'
+} from "@/components/ui/sidebar";
 
 import {
   DropdownMenu,
@@ -21,36 +21,44 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu";
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 
-import { useColorMode } from '@vueuse/core'
+import { useColorMode } from "@vueuse/core";
 
 const mode = useColorMode({
   disableTransition: false,
-})
+});
 
 const items = ref([
   {
-    title: 'Home',
-    url: '/',
-    icon: 'icon-[solar--home-bold-duotone]',
+    title: "Home",
+    url: "/",
+    icon: "icon-[solar--home-bold-duotone]",
   },
   {
-    title: 'About us',
-    url: '#',
-    icon: 'icon-[solar--question-circle-bold-duotone]',
+    title: "About us",
+    url: "#",
+    icon: "icon-[solar--question-circle-bold-duotone]",
   },
-])
+]);
 
 const toggleThemes = ref([
   {
-    title: 'Select theme',
+    title: "Select theme",
     class:
-      'dark:icon-[solar--sun-line-duotone] relative icon-[solar--moon-bold-duotone] transition-all',
+      "dark:icon-[solar--sun-2-line-duotone] relative icon-[solar--moon-bold-duotone] transition-all",
   },
-])
+]);
+
+const btnlogins = ref([
+  {
+    title: "Log In",
+    url: "/Login",
+    icon: "icon-[solar--login-2-bold-duotone]",
+  },
+]);
 </script>
 
 <template>
@@ -103,5 +111,18 @@ const toggleThemes = ref([
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
+    <SidebarFooter>
+      <SidebarMenu>
+        <Button class="w-full" asChild v-for="btnlogin in btnlogins">
+          <RouterLink
+            :to="btnlogin.url"
+            class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal"
+          >
+            <span :class="btnlogin.icon"></span>
+            <span class="space-x-2">{{ btnlogin.title }}</span>
+          </RouterLink>
+        </Button>
+      </SidebarMenu>
+    </SidebarFooter>
   </Sidebar>
 </template>

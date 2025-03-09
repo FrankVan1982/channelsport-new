@@ -30,9 +30,28 @@ import { Button } from "@/components/ui/button";
       </header>
       <br />
       <div class="flex justify-center items-center">
-        <Button as-child variant="outline" class="svg-button">
+        <Button as-child variant="outline" class="btn-margin group">
+          <a href="https://dazn.com" class="h-[5.2rem]">
+            <img src="/images/dazn/dazn.svg" alt="dazn.com" class="svg h-[4rem]" />
+          </a>
+        </Button>
+        <Button as-child variant="outline" class="group btn-margin">
           <a href="https://sky.com" class="h-[5.2rem]">
             <img src="/images/sky/sky-color.svg" alt="Sky.com" class="svg h-[4rem]" />
+          </a>
+        </Button>
+        <Button as-child variant="outline" class="group btn-margin">
+          <a href="https://mediasetinfinity.mediaset.it" class="h-[5.2rem]">
+            <img
+              src="/images/mediaset/mediaset2.svg"
+              alt="Mediaset"
+              class="svg h-[5.5rem]"
+            />
+          </a>
+        </Button>
+        <Button as-child variant="outline" class="group btn-margin">
+          <a href="https://raiplay.it" class="h-[5.2rem]">
+            <img src="/images/rai/rai.svg" alt="raiplay.it" class="svg h-[5rem]" />
           </a>
         </Button>
       </div>
