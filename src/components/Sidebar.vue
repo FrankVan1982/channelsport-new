@@ -29,7 +29,7 @@ const mode = useColorMode({
   disableTransition: false,
 });
 const isLoggedIn = ref(false);
-const auth = getAuth();
+let auth;
 onMounted(() => {
   auth = getAuth();
   onAuthStateChanged(auth, (user) => {

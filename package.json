@@ -21,7 +21,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^11.4.0",
-    "lucide-vue-next": "^0.476.0",
     "reka-ui": "^2.0.0",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
@@ -36,7 +35,6 @@
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.13.4",
     "@vitejs/plugin-vue": "^5.2.1",
-    "@vitest/eslint-plugin": "1.1.31",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.4.0",
     "@vue/test-utils": "^2.4.6",
@@ -49,7 +47,6 @@
     "jsdom": "^26.0.0",
     "npm-run-all2": "^7.0.2",
     "oxlint": "^0.15.10",
-    "pinia": "^3.0.1",
     "postcss": "^8.5.3",
     "prettier": "^3.5.1",
     "sharp": "^0.33.5",
@@ -58,9 +55,7 @@
     "unplugin-vue-components": "^28.4.0",
     "vite": "^6.1.0",
     "vite-plugin-image-optimizer": "^1.1.8",
-    "vite-plugin-vue-devtools": "^7.7.2",
-    "vitest": "^3.0.5",
-    "vue-tsc": "^2.2.2"
+    "vite-plugin-vue-devtools": "^7.7.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
