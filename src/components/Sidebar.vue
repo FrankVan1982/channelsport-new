@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
+import { onMounted, ref } from "vue";
 import {
   Sidebar,
   SidebarContent,
@@ -13,7 +12,6 @@ import {
   SidebarFooter,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -22,20 +20,38 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { Button } from "@/components/ui/button";
-
 import { useColorMode } from "@vueuse/core";
-
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const mode = useColorMode({
   disableTransition: false,
 });
-
+const isLoggedIn = ref(false);
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+    }
+  });
+});
+const handleSignOut = () => {
+  signOut(auth).then(() => {
+    console.log("You have successfully signed out!");
+    router.push("/");
+  });
+};
 const items = ref([
   {
     title: "Home",
     url: "/",
     icon: "icon-[solar--home-bold-duotone]",
+    isActive: true,
   },
   {
     title: "About us",
@@ -43,7 +59,6 @@ const items = ref([
     icon: "icon-[solar--question-circle-bold-duotone]",
   },
 ]);
-
 const toggleThemes = ref([
   {
     title: "Select theme",
@@ -51,12 +66,16 @@ const toggleThemes = ref([
       "dark:icon-[solar--sun-2-line-duotone] relative icon-[solar--moon-bold-duotone] transition-all",
   },
 ]);
-
 const btnlogins = ref([
   {
     title: "Log In",
-    url: "/Login",
+    url: "/login",
     icon: "icon-[solar--login-2-bold-duotone]",
+  },
+  {
+    title: "Sign Up",
+    url: "/register",
+    icon: "icon-[solar--user-plus-bold-duotone]",
   },
 ]);
 </script>
@@ -71,7 +90,7 @@ const btnlogins = ref([
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton asChild :is-active="item.isActive">
                 <a :href="item.url" class="flex items-center space-x-2">
                   <span :class="item.icon"></span>
                   <span>{{ item.title }}</span>
@@ -121,6 +140,10 @@ const btnlogins = ref([
             <span :class="btnlogin.icon"></span>
             <span class="space-x-2">{{ btnlogin.title }}</span>
           </RouterLink>
+        </Button>
+        <Button variant="outline" asChild v-if="isLoggedIn" @click="handleSignOut">
+          <span class="icon-[solar--logout-bold-duotone]"></span>
+          <span class="space-x-2">Log Out</span>
         </Button>
       </SidebarMenu>
     </SidebarFooter>

@@ -7,41 +7,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ref } from "vue";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
 const email = ref("");
 const password = ref("");
-const errMsg = ref();
 const router = useRouter();
 const register = () => {
-  signInWithEmailAndPassword(getAuth(), email.value, password.value)
+  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
-      console.log("You have successfully signed in!");
+      console.log("You have successfully registered!");
       router.push("/signed-users/");
     })
     .catch((error) => {
       console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errMsg.value = "Invalid email address.";
-          break;
-        case "auth/user-disabled":
-          errMsg.value = "User account is disabled.";
-          break;
-        case "auth/user-not-found":
-          errMsg.value = "User not found.";
-          break;
-        case "auth/wrong-password":
-          errMsg.value = "Incorrect password.";
-          break;
-        default:
-          errMsg.value = "Email or password was incorrect. Please try again.";
-          break;
-      }
+      alert(error.message);
     });
 };
 const signInWithGoogle = () => {};
@@ -51,8 +33,8 @@ const signInWithGoogle = () => {};
   <div class="flex flex-col gap-6">
     <Card>
       <CardHeader class="text-center">
-        <CardTitle class="text-xl"> Welcome back </CardTitle>
-        <CardDescription> Login with your Google account </CardDescription>
+        <CardTitle class="text-xl"> Welcome, new user </CardTitle>
+        <CardDescription> Signin with your Google account </CardDescription>
       </CardHeader>
       <CardContent>
         <form>
@@ -65,7 +47,7 @@ const signInWithGoogle = () => {};
                     fill="currentColor"
                   />
                 </svg>
-                Login with Google
+                Signin with Google
               </Button>
             </div>
             <div
@@ -89,23 +71,15 @@ const signInWithGoogle = () => {};
               <div class="grid gap-2">
                 <div class="flex items-center">
                   <Label html-for="password">Password</Label>
-                  <a href="#" class="ml-auto text-sm underline-offset-4 hover:underline">
-                    Forgot your password?
-                  </a>
                 </div>
                 <Input id="password" type="password" v-model="password" required />
               </div>
-              <Alert v-if="errMsg" variant="destructive">
-                <span class="icon-[solar--shield-warning-bold-duotone]" />
-                <AlertTitle> Error </AlertTitle>
-                <AlertDescription> {{ errMsg }} </AlertDescription>
-              </Alert>
-              <Button type="submit" class="w-full" @click="register"> Login </Button>
+              <Button type="submit" @click="register" class="w-full"> Sign Up </Button>
             </div>
             <div class="text-center text-sm">
-              Don't have an account?
-              <RouterLink to="/register" class="underline underline-offset-4">
-                Sign up
+              Do you already have an account?
+              <RouterLink to="/login" class="underline underline-offset-4">
+                Sign In
               </RouterLink>
             </div>
           </div>

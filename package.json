@@ -20,6 +20,7 @@
     "@vueuse/core": "^12.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "firebase": "^11.4.0",
     "lucide-vue-next": "^0.476.0",
     "reka-ui": "^2.0.0",
     "tailwind-merge": "^3.0.2",
@@ -48,6 +49,7 @@
     "jsdom": "^26.0.0",
     "npm-run-all2": "^7.0.2",
     "oxlint": "^0.15.10",
+    "pinia": "^3.0.1",
     "postcss": "^8.5.3",
     "prettier": "^3.5.1",
     "sharp": "^0.33.5",
@@ -62,9 +64,12 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@firebase/util",
       "esbuild",
-      "vue-demi",
-      "sharp"
+      "protobufjs",
+      "sharp",
+      "vue-demi"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 }
