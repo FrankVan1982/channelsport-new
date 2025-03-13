@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Index from '@/views/index.vue'
-import Login from '@/views/login.vue'
-import Register from '@/views/register.vue'
-import SignedUsers from '@/views/signed-users/index.vue'
+import index from '@/views/index.vue'
+import login from '@/views/login.vue'
+import register from '@/views/register.vue'
+import signedusers from '@/views/signed-users/index.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const router = createRouter({
@@ -11,22 +11,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Index,
+      component: index,
     },
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: login,
     },
     {
       path: '/register',
       name: 'register',
-      component: Register,
+      component: register,
     },
     {
       path: '/signed-users/',
       name: 'signed-users',
-      component: SignedUsers,
+      component: signedusers,
       meta: {
         requiresAuth: true,
       },
