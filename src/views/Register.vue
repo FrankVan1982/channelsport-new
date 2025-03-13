@@ -13,7 +13,7 @@
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <RegisterPage />
+      <RegisterForm />
     </SidebarInset>
   </SidebarProvider>
 </template>
@@ -21,5 +21,5 @@
 <script setup lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
-import RegisterPage from "../../pages/dashboard/index2.vue";
+import RegisterForm from "@/components/RegisterForm.vue";
 </script>

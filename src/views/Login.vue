@@ -13,7 +13,7 @@
           </BreadcrumbList>
         </Breadcrumb>
       </header>
-      <LoginPage />
+      <LoginForm />
     </SidebarInset>
   </SidebarProvider>
 </template>
@@ -21,5 +21,5 @@
 <script setup lang="ts">
 import Sidebar from "@/components/Sidebar.vue";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
-import LoginPage from "../../pages/dashboard/index.vue";
+import LoginForm from "../components/LoginForm.vue";
 </script>

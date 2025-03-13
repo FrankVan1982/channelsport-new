@@ -42,10 +42,11 @@ onMounted(() => {
 });
 const handleSignOut = () => {
   signOut(auth).then(() => {
-    console.log("You have successfully signed out!");
+    alert("You have successfully signed out!");
     router.push("/");
   });
 };
+const userName = ref("");
 const items = ref([
   {
     title: "Home",
@@ -78,6 +79,12 @@ const btnlogins = ref([
     icon: "icon-[solar--user-plus-bold-duotone]",
   },
 ]);
+const btnsignouts = ref([
+  {
+    title: "Log Out",
+    icon: "icon-[solar--logout-bold-duotone]",
+  },
+]);
 </script>
 
 <template>
@@ -90,7 +97,7 @@ const btnlogins = ref([
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-              <SidebarMenuButton asChild :is-active="item.isActive">
+              <SidebarMenuButton asChild :LoisLoggedIn-active="item.isActive">
                 <a :href="item.url" class="flex items-center space-x-2">
                   <span :class="item.icon"></span>
                   <span>{{ item.title }}</span>
@@ -141,9 +148,19 @@ const btnlogins = ref([
             <span class="space-x-2">{{ btnlogin.title }}</span>
           </RouterLink>
         </Button>
-        <Button variant="outline" asChild v-if="isLoggedIn" @click="handleSignOut">
-          <span class="icon-[solar--logout-bold-duotone]"></span>
-          <span class="space-x-2">Log Out</span>
+        <Button
+          class="w-full"
+          asChild
+          v-for="btnsignout in btnsignouts"
+          v-if="isLoggedIn"
+        >
+          <RouterLink
+            :to="btnsignout.url"
+            class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal"
+          >
+            <span :class="btnsignout.icon" @click="handleSignOut"></span>
+            <span class="space-x-2" @click="handleSignOut">{{ btnsignout.title }}</span>
+          </RouterLink>
         </Button>
       </SidebarMenu>
     </SidebarFooter>

@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Index from '@/views/Index.vue'
-import Login from '@/views/Login.vue'
-import Register from '@/views/Register.vue'
-import SignedUsers from '@/views/signed-users/Index.vue'
+import Index from '@/views/index.vue'
+import Login from '@/views/login.vue'
+import Register from '@/views/register.vue'
+import SignedUsers from '@/views/signed-users/index.vue'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const router = createRouter({
