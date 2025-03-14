@@ -16,6 +16,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  GitHubAuthProvider,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
 const email = ref("");
@@ -24,33 +25,30 @@ const errMsg = ref();
 const router = useRouter();
 const register = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
+    .then((result) => {
       console.log("You have successfully signed in!");
       router.push("/signed-users/");
     })
     .catch((error) => {
       console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errMsg.value = "Email or password are incorrect. Please try again.";
-          break;
-        case "auth/user-disabled":
-          errMsg.value = "User account is disabled.";
-          break;
-        case "auth/user-not-found":
-          errMsg.value = "User and password not found.";
-          break;
-        case "auth/wrong-password":
-          errMsg.value = "Email or password are incorrect. Please try again.";
-          break;
-        default:
-          errMsg.value = "Email or password are incorrect. Please try again.";
-          break;
-      }
+      errMsg.value = error.message;
     });
 };
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      console.log("You have successfully signed in with Google!");
+      router.push("/signed-users/");
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert(error.message);
+    });
+};
+
+const signInWithGithub = () => {
+  const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       console.log("You have successfully signed in with Google!");
@@ -80,7 +78,7 @@ const signInWithGoogle = () => {
         <Card>
           <CardHeader class="text-center">
             <CardTitle class="text-xl"> Welcome back </CardTitle>
-            <CardDescription> Login with your Google account </CardDescription>
+            <CardDescription> Login with OAuth </CardDescription>
           </CardHeader>
           <CardContent>
             <form>
@@ -95,43 +93,10 @@ const signInWithGoogle = () => {
                     </svg>
                     Login with Google
                   </Button>
-                </div>
-                <div
-                  class="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"
-                >
-                  <span class="relative z-10 bg-background px-2 text-muted-foreground">
-                    Or continue with
-                  </span>
-                </div>
-                <div class="grid gap-6">
-                  <div class="grid gap-2">
-                    <Label html-for="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="elisa.g.beckett@example.com"
-                      v-model="email"
-                      required
-                    />
-                  </div>
-                  <div class="grid gap-2">
-                    <div class="flex items-center">
-                      <Label html-for="password">Password</Label>
-                      <a
-                        href="#"
-                        class="ml-auto text-sm underline-offset-4 hover:underline"
-                      >
-                        Forgot your password?
-                      </a>
-                    </div>
-                    <Input id="password" type="password" v-model="password" required />
-                  </div>
-                  <Alert v-if="errMsg" variant="destructive">
-                    <span class="icon-[solar--shield-warning-bold-duotone]" />
-                    <AlertTitle> Error </AlertTitle>
-                    <AlertDescription> {{ errMsg }} </AlertDescription>
-                  </Alert>
-                  <Button type="submit" class="w-full" @click="register"> Login </Button>
+                  <Button variant="outline" class="w-full" @click="signInWithGithub">
+                    <img src="/images/github.svg" class="svg h-[20px] w-[20px]" />
+                    Login with GitHub
+                  </Button>
                 </div>
                 <div class="text-center text-sm">
                   Don't have an account?
