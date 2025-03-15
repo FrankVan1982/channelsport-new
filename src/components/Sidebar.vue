@@ -22,42 +22,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useColorMode } from "@vueuse/core";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useRouter } from "vue-router";
-const router = useRouter();
 const mode = useColorMode({
   disableTransition: false,
 });
-const isLoggedIn = ref(false);
-let auth;
-onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-    }
-  });
-});
-const handleSignOut = () => {
-  signOut(auth).then(() => {
-    alert("You have successfully signed out!");
-    router.push("/");
-  });
-};
-const userName = ref("");
 const items = ref([
   {
     title: "Home",
     url: "/",
     icon: "icon-[solar--home-bold-duotone]",
     isActive: true,
-  },
-  {
-    title: "About us",
-    url: "#",
-    icon: "icon-[solar--question-circle-bold-duotone]",
   },
 ]);
 const toggleThemes = ref([
@@ -75,7 +48,7 @@ const btnlogins = ref([
   },
   {
     title: "Sign Up",
-    url: "/register",
+    url: "/signup",
     icon: "icon-[solar--user-plus-bold-duotone]",
   },
 ]);
@@ -97,7 +70,7 @@ const btnsignouts = ref([
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem v-for="item in items" :key="item.title">
-              <SidebarMenuButton asChild :LoisLoggedIn-active="item.isActive">
+              <SidebarMenuButton asChild :is-active="item.isActive">
                 <a :href="item.url" class="flex items-center space-x-2">
                   <span :class="item.icon"></span>
                   <span>{{ item.title }}</span>
@@ -116,12 +89,16 @@ const btnsignouts = ref([
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
                   <DropdownMenuItem @click="mode = 'light'">
-                    <SidebarMenuButton class="w-full font-normal">Sun</SidebarMenuButton>
+                    <SidebarMenuButton class="w-full font-normal">
+                      <span class="icon-[solar--sun-2-line-duotone]" />
+                      Light
+                    </SidebarMenuButton>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem @click="mode = 'dark'"
-                    ><SidebarMenuButton class="w-full font-normal"
-                      >Moon</SidebarMenuButton
+                    ><SidebarMenuButton class="w-full font-normal">
+                      <span class="icon-[solar--moon-bold-duotone]" />
+                      Dark</SidebarMenuButton
                     ></DropdownMenuItem
                   >
 
@@ -158,8 +135,8 @@ const btnsignouts = ref([
             :to="btnsignout.url"
             class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal"
           >
-            <span :class="btnsignout.icon" @click="handleSignOut"></span>
-            <span class="space-x-2" @click="handleSignOut">{{ btnsignout.title }}</span>
+            <span :class="btnsignout.icon"></span>
+            <span class="space-x-2">{{ btnsignout.title }}</span>
           </RouterLink>
         </Button>
       </SidebarMenu>

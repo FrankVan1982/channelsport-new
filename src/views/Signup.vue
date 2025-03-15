@@ -3,5 +3,5 @@ import Signinout from "@/templates/Signinout.vue";
 </script>
 
 <template>
-  <Signinout pageName="Log In" btnName="Log In" labelName="Sign Up" labelLink="/signup" />
+  <Signinout pageName="Sign Up" btnName="Sign Up" labelName="Log In" labelLink="/login" />
 </template>
