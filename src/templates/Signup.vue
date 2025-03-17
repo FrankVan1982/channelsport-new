@@ -41,9 +41,54 @@ const register = () => {
     });
   f;
 };
-const signInWithGoogle = () => {};
-const signInWithGitHub = () => {};
-const signInWithTwitter = () => {};
+const signInWithGoogle = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      const user = result.user;
+      console.log(user);
+      alert("User logged in successfully");
+      router.push("/private/");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alert(errorMessage);
+    });
+};
+const signInWithGitHub = () => {
+  const provider = new GitHubAuthProvider();
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      const user = result.user;
+      console.log(user);
+      alert("User logged in successfully");
+      router.push("/private/");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alert(errorMessage);
+    });
+};
+const signInWithTwitter = () => {
+  const provider = new TwitterAuthProvider();
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      const user = result.user;
+      console.log(user);
+      alert("User logged in successfully");
+      router.push("/private/");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alert(errorMessage);
+    });
+};
 </script>
 
 <template>
