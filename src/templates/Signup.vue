@@ -17,7 +17,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
-  GitHubAuthProvider,
+  GithubAuthProvider,
   TwitterAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
