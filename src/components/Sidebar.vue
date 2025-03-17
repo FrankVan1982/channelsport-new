@@ -125,12 +125,7 @@ const btnsignouts = ref([
             <span class="space-x-2">{{ btnlogin.title }}</span>
           </RouterLink>
         </Button>
-        <Button
-          class="w-full"
-          asChild
-          v-for="btnsignout in btnsignouts"
-          v-if="isLoggedIn"
-        >
+        <Button class="w-full" asChild v-for="btnsignout in btnsignouts">
           <RouterLink
             :to="btnsignout.url"
             class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal"

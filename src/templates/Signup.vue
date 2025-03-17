@@ -12,13 +12,38 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  GitHubAuthProvider,
+  TwitterAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+const router = useRouter();
 
-const props = defineProps<{
-  pageName: string;
-  btnName: string;
-  labelName: string;
-  labelLink: string;
-}>();
+const email = ref("");
+const password = ref("");
+const register = () => {
+  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then((data) => {
+      const user = data.user;
+      console.log(user);
+      alert("User registered successfully");
+      router.push("/private/");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alert(errorMessage);
+    });
+  f;
+};
+const signInWithGoogle = () => {};
+const signInWithGitHub = () => {};
+const signInWithTwitter = () => {};
 </script>
 
 <template>
@@ -29,7 +54,7 @@ const props = defineProps<{
       <div class="flex w-full max-w-sm flex-col gap-6">
         <a href="#" class="flex items-center gap-2 self-center font-medium">
           <div
-            class="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground"
+            class="flex h-6 w-6 items-center justify-center rounded-none bg-primary text-primary-foreground"
           >
             <span class="icon-[solar--posts-carousel-vertical-bold-duotone] size-4" />
           </div>
@@ -38,25 +63,24 @@ const props = defineProps<{
         <div class="flex flex-col gap-6">
           <Card>
             <CardHeader class="text-center">
-              <CardTitle class="text-xl"> Welcome back </CardTitle>
-              <CardDescription> Login with OAuth </CardDescription>
+              <CardTitle class="text-xl"> Welcome </CardTitle>
+              <CardDescription> Signup with OAuth </CardDescription>
             </CardHeader>
             <CardContent>
               <form>
                 <div class="grid gap-6">
-                  <div class="flex flex-col gap-4">
-                    <Button variant="outline" class="w-full">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                          d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                      Login with Google
+                  <div class="flex flex-col gap-2">
+                    <Button variant="outline" class="w-full" @click="signInWithGoogle">
+                      <span class="icon-[simple-icons--google] h-[18px] w-[18px]" />
+                      Signup with Google
                     </Button>
-                    <Button variant="outline" class="w-full">
-                      <img src="/images/github.svg" class="svg h-[20px] w-[20px]" />
-                      Login with GitHub
+                    <Button variant="outline" class="w-full" @click="signInWithGitHub">
+                      <span class="icon-[simple-icons--github] h-[20px] w-[20px]" />
+                      Signup with GitHub
+                    </Button>
+                    <Button variant="outline" class="w-full" @click="signInWithTwitter">
+                      <span class="icon-[simple-icons--x] w-[20px] h-[20px]" />
+                      Signup with X (Twitter)
                     </Button>
                   </div>
                   <div
@@ -83,12 +107,14 @@ const props = defineProps<{
                       </div>
                       <Input id="password" type="password" v-model="password" required />
                     </div>
-                    <Button type="submit" class="w-full"> {{ btnName }} </Button>
+                    <Button type="submit" class="w-full" @click="register">
+                      Sign Up
+                    </Button>
                   </div>
                   <div class="text-center text-sm">
-                    Don't have an account?
-                    <RouterLink v-to="labelLink" class="underline underline-offset-4">
-                      {{ labelName }}
+                    Do you already have an account?
+                    <RouterLink to="/login" class="underline underline-offset-4">
+                      Log In
                     </RouterLink>
                   </div>
                 </div>

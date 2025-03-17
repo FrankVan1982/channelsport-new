@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Signinout from "@/templates/Signinout.vue";
+import Signup from "@/templates/Signup.vue";
 </script>
 
 <template>
-  <Signinout pageName="Sign Up" btnName="Sign Up" labelName="Log In" labelLink="/login" />
+  <Signup />
 </template>
