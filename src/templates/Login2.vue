@@ -21,6 +21,26 @@ import {
   TwitterAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+
+const email = ref("");
+const password = ref("");
+const router = useRouter();
+
+const signIn = () => {
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      alert("User logged in successfully");
+      router.push("/private/");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      alert(errorMessage);
+    });
+};
 </script>
 
 <template>

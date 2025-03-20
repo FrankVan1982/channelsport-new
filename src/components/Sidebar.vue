@@ -51,6 +51,11 @@ const btnlogins = ref([
     url: "/signup",
     icon: "icon-[solar--user-plus-bold-duotone]",
   },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: "icon-[solar--user-bold-duotone]",
+  },
 ]);
 const btnsignouts = ref([
   {

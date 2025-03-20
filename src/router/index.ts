@@ -3,7 +3,7 @@ import index from '@/views/Index.vue'
 import login from '@/views/Login.vue'
 import signup from '@/views/Signup.vue'
 import privatepage from '@/views/private/Index.vue'
-import profilepage from '@/views/Profile.vue'
+import profile from '@/views/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,11 +25,8 @@ const router = createRouter({
     },
     {
       path: '/profile',
-      name: 'register',
-      component: profilepage,
-      meta: {
-        requiresAuth: false,
-      },
+      name: 'profile',
+      component: profile,
     },
     {
       path: '/private/',

@@ -23,24 +23,6 @@ import {
 } from "firebase/auth";
 const router = useRouter();
 
-const email = ref("");
-const password = ref("");
-const register = () => {
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
-      const user = data.user;
-      console.log(user);
-      alert("User registered successfully");
-      router.push("/private/");
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-      alert(errorMessage);
-    });
-  f;
-};
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
@@ -58,7 +40,7 @@ const signInWithGoogle = () => {
     });
 };
 const signInWithGitHub = () => {
-  const provider = new GitHubAuthProvider();
+  const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       const user = result.user;
@@ -128,33 +110,10 @@ const signInWithTwitter = () => {
                       Signup with X (Twitter)
                     </Button>
                   </div>
-                  <div
-                    class="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"
-                  >
-                    <span class="relative z-10 bg-background px-2 text-muted-foreground">
-                      Or continue with
-                    </span>
-                  </div>
-                  <div class="grid gap-6">
-                    <div class="grid gap-2">
-                      <Label html-for="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="elisa.g.beckett@google.com"
-                        v-model="email"
-                        required
-                      />
+                  <div class="hidden">
+                    <div>
+                      <Input required />
                     </div>
-                    <div class="grid gap-2">
-                      <div class="flex items-center">
-                        <Label html-for="password">Password</Label>
-                      </div>
-                      <Input id="password" type="password" v-model="password" required />
-                    </div>
-                    <Button type="submit" class="w-full" @click="register">
-                      Sign Up
-                    </Button>
                   </div>
                   <div class="text-center text-sm">
                     Do you already have an account?
