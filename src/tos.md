@@ -9,10 +9,8 @@ Effective date: 2024-03-20
 
 3. Access to and use of the Site
    Free access: Access to the Site and consultation of the contents are free of charge.
-
-Third Party Content: The Site offers links and references to third party websites that are considered authoritative. We do not guarantee the accuracy, completeness or timeliness of the information on these sites.
-
-Prohibition of publication of content: Users are not authorised to publish content on the Site. All rights to the content are reserved and do not belong to the platform.
+   Third Party Content: The Site offers links and references to third party websites that are considered authoritative. We do not guarantee the accuracy, completeness or timeliness of the information on these sites.
+   Prohibition of publication of content: Users are not authorised to publish content on the Site. All rights to the content are reserved and do not belong to the platform.
 
 4. Intellectual Property
    All content, including text, graphics, logos, images and data, are the property of their respective owners and are protected by copyright and intellectual property laws. Unauthorised use of the contents of the Site may constitute a violation of applicable laws.
