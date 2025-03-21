@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 </script>
 
 <template>
-  <Base pageName="Home">
+  <Base>
     <br />
     <div class="flex justify-center items-center">
       <Button as-child variant="outline" class="btn-margin group">
