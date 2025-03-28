@@ -1,46 +1,55 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import index from '@/views/Index.vue'
-import sign from '@/views/Sign.vue'
-import privatepage from '@/views/private/Index.vue'
-import profile from '@/views/Profile.vue'
-import tos from '@/views/TOS.vue'
+const viewModules = import.meta.glob('@/views/*.vue')
+const channelModules = import.meta.glob('@/views/private/channels/*.vue')
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+const viewRoutes = Object.entries(viewModules).map(([path, component]) => {
+  const name = path.split('/').pop()?.replace('.vue', '') || ''
+  return {
+    path: `/${name.toLowerCase()}`,
+    name: name,
+    component: component,
+  }
+})
+
+const channelRoutes = Object.entries(channelModules).map(([path, component]) => {
+  const name = path.split('/').pop()?.replace('.vue', '') || ''
+  return {
+    path: `/channels/${name.toLowerCase()}`,
+    name: `channel-${name}`,
+    component: component,
+    meta: { requiresAuth: true }, // Tutti i canali richiedono autenticazione
+  }
+})
+
+const manualRoutes = [
+  { path: '/', name: 'home', component: () => import('@/views/Index.vue') },
+  { path: '/sign', name: 'sign', component: () => import('@/views/Sign.vue') },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('@/views/Profile.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/private',
+    name: 'private',
+    component: () => import('@/views/private/Index.vue'),
+    meta: { requiresAuth: true },
+  },
+  { path: '/terms-of-service', name: 'tos', component: () => import('@/views/TOS.vue') },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: () => import('@/views/404.vue'),
+  },
+]
+
+const routes = [...viewRoutes, ...channelRoutes, ...manualRoutes]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: index,
-    },
-    {
-      path: '/sign',
-      name: 'sign',
-      component: sign,
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: profile,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/terms-of-service',
-      name: 'tos',
-      component: tos,
-    },
-    {
-      path: '/private/',
-      name: 'privatepage',
-      component: privatepage,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-  ],
+  routes,
 })
 
 const getCurrentUser = () => {

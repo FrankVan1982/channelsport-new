@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   getAuth,
@@ -17,6 +17,7 @@ import {
   GithubAuthProvider,
   TwitterAuthProvider,
   signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
 const router = useRouter();
 const errMsg = ref();
@@ -27,7 +28,6 @@ const signInWithGoogle = () => {
     .then((result) => {
       const user = result.user;
       console.log(user);
-      alert("User logged in successfully");
       router.push("/private/");
       return user;
     })
@@ -35,7 +35,6 @@ const signInWithGoogle = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      alert(errorMessage);
       switch (errorCode) {
         case "auth/popup-closed-by-user":
           errMsg.value = "Popup was closed by the user";
@@ -58,7 +57,6 @@ const signInWithGitHub = () => {
     .then((result) => {
       const user = result.user;
       console.log(user);
-      alert("User logged in successfully");
       router.push("/private/");
       return user;
     })
@@ -66,7 +64,6 @@ const signInWithGitHub = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      alert(errorMessage);
       switch (errorCode) {
         case "auth/popup-closed-by-user":
           errMsg.value = "Popup was closed by the user";
@@ -89,7 +86,6 @@ const signInWithTwitter = () => {
     .then((result) => {
       const user = result.user;
       console.log(user);
-      alert("User logged in successfully");
       router.push("/private/");
       return user;
     })
@@ -97,7 +93,6 @@ const signInWithTwitter = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
-      alert(errorMessage);
       switch (errorCode) {
         case "auth/popup-closed-by-user":
           errMsg.value = "Popup was closed by the user";
@@ -162,10 +157,6 @@ const signInWithTwitter = () => {
                       {{ errMsg }}
                     </AlertDescription>
                   </Alert>
-                  Do you already have an account?
-                  <RouterLink to="/login" class="underline underline-offset-4">
-                    Log In
-                  </RouterLink>
                 </div>
               </div>
             </form>

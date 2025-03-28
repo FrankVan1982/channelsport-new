@@ -23,6 +23,9 @@ importers:
       reka-ui:
         specifier: ^2.0.0
         version: 2.0.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+      shaka-player:
+        specifier: ^4.14.2
+        version: 4.14.2
       tailwind-merge:
         specifier: ^3.0.2
         version: 3.0.2
@@ -1562,6 +1565,9 @@ packages:
   electron-to-chromium@1.5.103:
     resolution: {integrity: sha512-P6+XzIkfndgsrjROJWfSvVEgNHtPgbhVyTkwLjUM2HU/h7pZRORgaTlHqfAikqxKmdJMLW8fftrdGWbd/Ds0FA==}
 
+  eme-encryption-scheme-polyfill@2.2.1:
+    resolution: {integrity: sha512-GzgrLuZPYGijd8oaKuBqYv3Tc2oruDZM3V2982KOuy/PA1N3zwMe+/oIXJYfZ3BH3PwW5nONdBBE+VY6jlwbrw==}
+
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -2411,6 +2417,10 @@ packages:
     resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
     engines: {node: '>=10'}
     hasBin: true
+
+  shaka-player@4.14.2:
+    resolution: {integrity: sha512-PNhhTIDOmsif/Ghc63hJs6Z3hkSOxp0tF8RPTcK9g1B7bRBrAq3DLJ1g6X+2W6zUGpCAL5Nay/hrcyMdTwZpQw==}
+    engines: {node: '>=18'}
 
   sharp@0.33.5:
     resolution: {integrity: sha512-haPVm1EkS9pgvHrQ/F3Xy+hgcuMV0Wm9vfIBSiwZ05k+xgb0PkBQpGsAA/oWdDobNaZTH5ppvHtzCFbnSEwHVw==}
@@ -4348,6 +4358,8 @@ snapshots:
 
   electron-to-chromium@1.5.103: {}
 
+  eme-encryption-scheme-polyfill@2.2.1: {}
+
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
@@ -5251,6 +5263,10 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.7.1: {}
+
+  shaka-player@4.14.2:
+    dependencies:
+      eme-encryption-scheme-polyfill: 2.2.1
 
   sharp@0.33.5:
     dependencies:

@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
+  useSidebar
 } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
@@ -24,7 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+const { isMobile } = useSidebar()
 /** grahics mechanisms */
 import { Button } from "@/components/ui/button";
 import { useColorMode } from "@vueuse/core";
@@ -37,18 +38,21 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const isLoggedIn = ref(false);
+const isVisible = ref(true);
 let auth;
 onMounted(() => {
   auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       isLoggedIn.value = true;
-      const photoURL = user.photoURL;
-      const displayName = user.displayName
-      const uid = user.uid;
-      const email = user.email;
+      isVisible.value = false;
+      photoURL.value = getAuth().currentUser?.photoURL;
+      displayName.value = getAuth().currentUser?.displayName;
+      alt.value = getAuth().currentUser?.displayName;
+      email.value = getAuth().currentUser?.email;
     } else {
       isLoggedIn.value = false;
+      isVisible.value = true;
     }
   });
 });
@@ -57,15 +61,6 @@ const handleSignOut = () => {
     router.push("/");
   });
 };
-
-const displayName = ref(onMounted(() => {
-  auth = getAuth();
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const displayName = user.displayName
-    }
-  });
-}));
 
 /** refs for button, etc. */
 const items = ref([
@@ -97,6 +92,7 @@ const btnlogins = ref([
     icon: "icon-[solar--login-2-bold-duotone]",
   },
 ]);
+/**
 const btnprofiles = ref([
   {
     title: "Profile",
@@ -110,6 +106,17 @@ const btnsignouts = ref([
     icon: "icon-[solar--logout-bold-duotone]",
   },
 ]);
+*/
+const photoURL = ref();
+const displayName = ref();
+const alt = ref();
+const email = ref();
+const avatars = ref([
+  {
+    src: photoURL,
+    alt: alt,
+  },
+])
 </script>
 
 <template>
@@ -173,7 +180,7 @@ const btnsignouts = ref([
     <SidebarFooter>
       <SidebarMenu>
         <!-- Sign Button -->
-        <Button class="w-full" asChild v-for="btnlogin in btnlogins">
+        <Button class="w-full" asChild v-for="btnlogin in btnlogins" v-if="isVisible">
           <RouterLink :to="btnlogin.url"
             class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal">
             <span :class="btnlogin.icon"></span>
@@ -181,36 +188,61 @@ const btnsignouts = ref([
           </RouterLink>
         </Button>
         <!-- Profile Button (will be removed in the future) -->
-        <Button class="w-full" asChild v-for="btnprofile in btnprofiles" v-if="isLoggedIn">
+        <!-- <Button class="w-full" variant="secondary" asChild v-for="btnprofile in btnprofiles" v-if="isLoggedIn">
           <RouterLink :to="btnprofile.url"
             class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal">
             <span :class="btnprofile.icon"></span>
             <span class="space-x-2">{{ btnprofile.title }}</span>
           </RouterLink>
-        </Button>
-        <!-- SignOut Button -->
-        <Button class="w-full" asChild v-for="btnsignout in btnsignouts" v-if="isLoggedIn" @click="handleSignOut">
-          <RouterLink class="flex items-center justify-start bg-[#ffffff] hover:bg-[#1ac4e1] transition-all font-normal">
-            <span :class="btnsignout.icon" @click="handleSignOut"></span>
-            <span class="space-x-2" @click="handleSignOut">{{ btnsignout.title }}</span>
-          </RouterLink>
-        </Button>
+        </Button> -->
         <DropdownMenu v-if="isLoggedIn">
           <DropdownMenuTrigger as-child>
             <SidebarMenuButton size="lg"
               class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-              <Avatar class="h-8 w-8 rounded-lg">
-                <!-- <AvatarImage :src="photoURL" /> -->
-                <AvatarFallback class="rounded-lg">
-                  {{ displayName }}
+              <Avatar class="h-8 w-8 rounded-full" v-for="avatar in avatars">
+                <AvatarImage :src="avatar.src" />
+                <AvatarFallback class="rounded-lg truncate">
+                  {{ avatar.alt }}
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-semibold">{{ }}</span>
-                <span class="truncate text-xs">{{ }}</span>
+                <span class="truncate font-semibold">{{ displayName }}</span>
+                <span class="truncate text-xs">{{ email }}</span>
               </div>
+              <span class="icon-[solar--double-alt-arrow-up-line-duotone]"></span>
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+          <DropdownMenuContent class="w-[--reka-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            :side="isMobile ? 'bottom' : 'right'" align="end" :side-offset="4">
+            <DropdownMenuLabel class="p-0 font-normal">
+              <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar class="h-8 w-8 rounded-full" v-for="avatar in avatars">
+                  <AvatarImage :src="avatar.src" :alt="avatar.alt" />
+                  <AvatarFallback class="rounded-lg truncate">
+                    {{ displayName }}
+                  </AvatarFallback>
+                </Avatar>
+                <div class="grid flex-1 text-left text-sm leading-tight">
+                  <span class="truncate font-semibold">{{ displayName }}</span>
+                  <span class="truncate text-xs">{{ email }}</span>
+                </div>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <RouterLink to="/profile" class="space-x-2">
+                  <span class="icon-[solar--user-bold-duotone]"></span>
+                  Profile Settings
+                </RouterLink>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem @click="handleSignOut">
+              <span class="icon-[solar--logout-bold-duotone]"></span>
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenu>
     </SidebarFooter>
