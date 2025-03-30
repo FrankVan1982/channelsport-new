@@ -16,18 +16,18 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   TwitterAuthProvider,
-  signInWithPopup,
+  signInWithRedirect,
   onAuthStateChanged,
+  getRedirectResult,
 } from "firebase/auth";
 const router = useRouter();
 const errMsg = ref();
 
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
-  signInWithPopup(getAuth(), provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
+  signInWithRedirect(getAuth(), provider)
+    .then(async (result) => {
+      const user = await getRedirectResult(getAuth())
       router.push("/private/");
       return user;
     })
@@ -53,10 +53,9 @@ const signInWithGoogle = () => {
 };
 const signInWithGitHub = () => {
   const provider = new GithubAuthProvider();
-  signInWithPopup(getAuth(), provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
+  signInWithRedirect(getAuth(), provider)
+    .then(async (result) => {
+      const user = await getRedirectResult(getAuth())
       router.push("/private/");
       return user;
     })
@@ -82,10 +81,9 @@ const signInWithGitHub = () => {
 };
 const signInWithTwitter = () => {
   const provider = new TwitterAuthProvider();
-  signInWithPopup(getAuth(), provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
+  signInWithRedirect(getAuth(), provider)
+    .then(async (result) => {
+      const user = await getRedirectResult(getAuth())
       router.push("/private/");
       return user;
     })
@@ -104,7 +102,7 @@ const signInWithTwitter = () => {
           errMsg.value = "Popup was blocked by the browser";
           break;
         default:
-          errMsg.value = "There's a generic error. Please try again!";
+          errMsg.value = "There's a generic error. Please try again!", errorMessage;
           break;
       }
     });
