@@ -19,6 +19,8 @@ import {
   signInWithRedirect,
   onAuthStateChanged,
   getRedirectResult,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 const router = useRouter();
 const errMsg = ref();
@@ -26,8 +28,8 @@ const errMsg = ref();
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithRedirect(getAuth(), provider)
-    .then(async (result) => {
-      const user = await getRedirectResult(getAuth())
+    .then(() => {
+      const user = getRedirectResult(getAuth())
       router.push("/private/");
       return user;
     })
@@ -73,6 +75,9 @@ const signInWithGitHub = () => {
         case "auth/popup-blocked":
           errMsg.value = "Popup was blocked by the browser";
           break;
+        case "auth/unauthorized-domain":
+          errMsg.value = "Unauthorized domain. Please contact the administrator";
+          break;
         default:
           errMsg.value = "There's a generic error. Please try again!";
           break;
@@ -107,6 +112,34 @@ const signInWithTwitter = () => {
       }
     });
 };
+
+onMounted(() => {
+  getRedirectResult(getAuth())
+    .then((result) => {
+      if (result?.user) {
+        router.push("/private/");
+      }
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      switch (errorCode) {
+        case "auth/popup-closed-by-user":
+          errMsg.value = "Popup was closed by the user";
+          break;
+        case "auth/cancelled-popup-request":
+          errMsg.value = "Popup was cancelled by the user";
+          break;
+        case "auth/popup-blocked":
+          errMsg.value = "Popup was blocked by the browser";
+          break;
+        default:
+          errMsg.value = "There's an error. Check che console and try again!";
+          break;
+      }
+    });
+});
 </script>
 
 <template>
